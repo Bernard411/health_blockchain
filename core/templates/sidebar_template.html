@@ -1,6 +1,6 @@
 {% load static %}
 
-<aside class="main-sidebar sidebar-dark-success elevation-4" style="font-size: small;">
+<aside class="main-sidebar sidebar-dark-warning elevation-4" style="font-size: small;">
   <!-- Brand Logo -->
   <style>
     body {
@@ -10,47 +10,53 @@
   </style>
   <a href="" class="brand-link">
     <img src="{% static 'mw.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-bold">CFI-LESS</span>
+    <span class="brand-text font-weight-bold" style="font-size: small;">kamuzu central hospital</span>
   </a>
 
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <!-- <div class="image">
-        <img src="{% static 'troy.png' %}" class="img-circle elevation-2" alt="User Image">
-      </div> -->
-      <div class="info">
-        <a href="" class="d-block"><b>logged user</b>:officer @{{ user.username }}</a>
-      </div>
-    </div>
+   
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
           <a href="" class="nav-link {% if request.path == '/threat-detection/' %}active{% endif %}">
-            <i class="nav-icon fas fa-exclamation-triangle"></i>
-            <span>Threat Detection</span>
+            <i class="nav-icon fas fa-users"></i>
+            <span>Patients Database</span>
           </a>
         </li>
-  
-
+        
         <li class="nav-item">
           <a href="" class="nav-link {% if request.path == '/criminal-database/' %}active{% endif %}">
-            <i class="nav-icon fas fa-database"></i>
-            <span>Criminal Database</span>
+            <i class="nav-icon fas fa-user-plus"></i>
+            <span>Add Patients</span>
           </a>
         </li>
-
-   
-
+        
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/check-photo/' %}active{% endif %}">
-            <i class="nav-icon fas fa-camera"></i>
-            <span>Facial Recognition</span>
+          <a href="" class="nav-link {% if request.path == '/manage-patients/' %}active{% endif %}">
+            <i class="nav-icon fas fa-user-edit"></i>
+            <span>Manage Patients</span>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
+            <i class="nav-icon fas fa-file-medical"></i>
+            <span>Add Health Records</span>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a href="" class="nav-link {% if request.path == '/manage-health-records/' %}active{% endif %}">
+            <i class="nav-icon fas fa-file-medical-alt"></i>
+            <span>Manage Health Records</span>
+          </a>
+        </li>
+        
+
         
    
 
