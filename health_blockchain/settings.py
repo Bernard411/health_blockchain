@@ -132,3 +132,5 @@ MEDIA_ROOT = BASE_DIR / "media/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
+
+WEB3_PROVIDER_URI = "https://sepolia.infura.io/v3/8dcbb55008924db8ac9f20ad26c64e1e"  # Or use another provider

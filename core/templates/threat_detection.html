@@ -1,0 +1,502 @@
+{% extends 'headoffice/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+
+
+<style>
+body {
+  font-size: small;
+  font-family: Poppins;
+}
+/* From Uiverse.io by mrhyddenn */ 
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Adjust the space between the buttons */
+  gap: 10px; /* Optional: Add space between the buttons */
+  width: 100%; /* Ensure the container spans the full width */
+}
+
+.button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  color: #0f1923;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all .15s ease;
+  flex-grow: 1; /* Make the buttons fill the available space equally */
+}
+
+.button_lg {
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #0f1923;
+  overflow: hidden;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+  text-align: center;
+}
+
+.button_sl {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -8px;
+  width: 0;
+  background-color: #ff4655;
+  transform: skew(-15deg);
+  transition: all .2s ease;
+}
+
+.button_text {
+  position: relative;
+  text-align: center;
+}
+
+.button:hover {
+  color: #0f1923;
+}
+
+.button:hover .button_sl {
+  width: calc(100% + 15px);
+}
+
+.button:hover .button_lg::after {
+  background-color: #fff;
+}
+
+
+</style>
+
+<div class="button-container">
+  <button class="button">
+    <span class="button_lg">
+      <span class="button_sl"></span>
+      <span class="button_text">Suspects</span> <!-- Renamed from "Wanted" -->
+    </span>
+  </button>
+
+  <button class="button">
+    <span class="button_lg">
+      <span class="button_sl"></span>
+      <span class="button_text">High-Value Targets</span> <!-- Renamed from "High Value" -->
+    </span>
+  </button>
+
+  <button class="button">
+    <span class="button_lg">
+      <span class="button_sl"></span>
+      <span class="button_text">Unknown Threats</span> <!-- Renamed from "Unknown" -->
+    </span>
+  </button>
+</div>
+
+  
+    <div class="row my-3" style="display: flex; justify-content: space-between;">
+
+      <!-- First Card -->
+      <div class="col-lg-6">
+     
+        <div class="card-header">
+          <svg fill="#000000" style="width: 30px;" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>Eclipse Mosquitto icon</title><path d="M1.353 11.424c0 2.637.964 5.105 2.636 7.013l-1.007.903A11.968 11.968 0 010 11.424C0 8.065 1.38 5.029 3.604 2.85l.05.045L6.637 5.57a7.942 7.942 0 00-1.433 9.963l1.03-.923a6.59 6.59 0 011.416-8.132l1.02.915.909.814.941.844a2.778 2.778 0 00-1.311 2.367c0 1.23.795 2.273 1.899 2.646l.095 1.297a4.024 4.024 0 01-2.483-6.27l-.9-.809-.004-.003a5.233 5.233 0 00.205 6.546l-3.023 2.71a9.291 9.291 0 01-.21-11.97L3.777 4.66a10.599 10.599 0 00-2.407 6.14l-.006.008.005.004c-.011.203-.017.406-.017.612zm11.54 2.639a2.793 2.793 0 00.588-5.013l.941-.844.908-.814 1.021-.915a6.59 6.59 0 011.417 8.132l1.029.923a7.942 7.942 0 00-1.433-9.963l2.981-2.673.05-.045A11.964 11.964 0 0124 11.424c0 2.98-1.095 5.769-2.982 7.916l-1.007-.903a10.61 10.61 0 002.619-7.625l.005-.004-.006-.007a10.598 10.598 0 00-2.407-6.141l-1.008.904a9.291 9.291 0 01-.211 11.97l-3.023-2.71a5.233 5.233 0 00.205-6.546l-.004.003-.9.808a4.024 4.024 0 01-2.482 6.27zM12 21.149l.335-4.571.271-3.712a1.56 1.56 0 10-1.212 0l.271 3.712Z"></path></g></svg>
+        feed one
+        </div>     
+    
+          <div class="card-body " style="display: flex; align-items: center;  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
+            <div style="flex: 70%;">
+              <img src="{% url 'video_feed' %}" alt="Video Stream" style="width: 100%;" >
+            </div>
+    
+         
+      </div>
+
+      </div>
+      <div class="col-lg-6">
+     
+        <div class="card-header">
+          <svg fill="#000000" style="width: 30px;" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>Eclipse Mosquitto icon</title><path d="M1.353 11.424c0 2.637.964 5.105 2.636 7.013l-1.007.903A11.968 11.968 0 010 11.424C0 8.065 1.38 5.029 3.604 2.85l.05.045L6.637 5.57a7.942 7.942 0 00-1.433 9.963l1.03-.923a6.59 6.59 0 011.416-8.132l1.02.915.909.814.941.844a2.778 2.778 0 00-1.311 2.367c0 1.23.795 2.273 1.899 2.646l.095 1.297a4.024 4.024 0 01-2.483-6.27l-.9-.809-.004-.003a5.233 5.233 0 00.205 6.546l-3.023 2.71a9.291 9.291 0 01-.21-11.97L3.777 4.66a10.599 10.599 0 00-2.407 6.14l-.006.008.005.004c-.011.203-.017.406-.017.612zm11.54 2.639a2.793 2.793 0 00.588-5.013l.941-.844.908-.814 1.021-.915a6.59 6.59 0 011.417 8.132l1.029.923a7.942 7.942 0 00-1.433-9.963l2.981-2.673.05-.045A11.964 11.964 0 0124 11.424c0 2.98-1.095 5.769-2.982 7.916l-1.007-.903a10.61 10.61 0 002.619-7.625l.005-.004-.006-.007a10.598 10.598 0 00-2.407-6.141l-1.008.904a9.291 9.291 0 01-.211 11.97l-3.023-2.71a5.233 5.233 0 00.205-6.546l-.004.003-.9.808a4.024 4.024 0 01-2.482 6.27zM12 21.149l.335-4.571.271-3.712a1.56 1.56 0 10-1.212 0l.271 3.712Z"></path></g></svg>
+          feed two
+        </div> 
+        <div class="card-body " style="display: flex; align-items: center;  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
+          <div style="flex: 70%;">
+            <img src="{% url 'video_feed' %}" alt="Video Stream" style="width: 100%;" >
+          </div>
+        </div>
+  
+       
+    </div>
+    </div>
+    <div class="conta mx-3">
+       <svg fill="#000000" style="width: 30px;" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title>Microsoft Access icon</title><path d="M15 .75q1.605 0 3.21.176.282.035.815.111.534.076 1.178.211.645.135 1.318.328.674.194 1.225.457.55.264.902.598.352.334.352.744v17.25q0 .41-.352.744-.351.334-.902.598-.55.263-1.225.457-.673.193-1.318.328-.644.135-1.178.217-.533.082-.814.105-1.606.176-3.211.176-1.617 0-3.21-.176-.282-.023-.815-.105-.534-.082-1.178-.217-.645-.135-1.318-.328-.674-.194-1.225-.457-.55-.264-.902-.598Q6 21.035 6 20.625V18H.996q-.41 0-.703-.293T0 17.004V6.996q0-.41.293-.703T.996 6H6V3.375q0-.41.352-.744.351-.334.902-.598.55-.263 1.225-.457.673-.193 1.318-.328.644-.135 1.178-.21.533-.077.814-.112Q13.383.75 15 .75zm0 1.5q-.762 0-1.7.053-.937.052-1.904.181-.966.13-1.88.346-.914.217-1.618.545.727.34 1.635.557.908.216 1.863.34.956.123 1.887.175.932.053 1.717.053t1.717-.053q.931-.052 1.887-.176.955-.123 1.863-.34.908-.216 1.635-.556-.704-.328-1.618-.545-.914-.217-1.88-.346-.967-.129-1.905-.181Q15.762 2.25 15 2.25zM4.723 14.145h2.543l.597 1.793h2.004l-2.87-7.876H5.038l-2.906 7.876h1.992zM22.5 20.379v-3.55q-.773.339-1.729.562-.955.222-1.962.357-1.008.135-1.993.193Q15.832 18 15 18q-.855 0-1.705-.053-.85-.052-1.693-.146-.27.199-.598.199H7.5v2.379q.34.27.914.48.574.211 1.272.364.697.152 1.459.252.761.1 1.482.164.72.064 1.342.088.62.023 1.031.023.41 0 1.031-.023.621-.024 1.342-.088.72-.065 1.482-.164.762-.1 1.46-.252.697-.153 1.27-.364.575-.21.915-.48zm0-5.227v-4.324q-.773.34-1.729.563-.955.222-1.962.357-1.008.135-1.993.193Q15.832 12 15 12q-.75 0-1.5-.041t-1.5-.111v4.5q.75.082 1.5.117t1.5.035q.434 0 1.055-.023.62-.024 1.33-.088.709-.065 1.459-.164.75-.1 1.441-.252.692-.153 1.272-.352.58-.2.943-.469zm0-6V4.828q-.773.34-1.729.563-.955.222-1.962.357-1.008.135-1.993.193Q15.832 6 15 6q-.832 0-1.816-.059-.985-.058-1.993-.193-1.007-.135-1.962-.357-.956-.223-1.729-.563V6h3.504q.41 0 .703.293t.293.703v3.352q.75.082 1.5.117t1.5.035q.434 0 1.055-.023.62-.024 1.33-.088.709-.065 1.459-.164.75-.1 1.441-.252.692-.153 1.266-.352.574-.2.949-.469zm-17.32 3.47l.808-2.45.785 2.45Z"></path></g></svg>
+       suspects database
+    <div class="card">
+      <div class="card-header">
+        <div class="card-tools">
+          <div class="input-group input-group-sm" style="width: 300px;">
+    
+  
+          <form class="form"  method="GET" action="{% url 'search_person' %}">
+              <label for="search">
+                  <input required=""  value="{{ query }}" autocomplete="off" placeholder="search names" name="q" id="search" type="text">
+                  <div class="icon">
+                   
+                      <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="swap-off">
+                          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linejoin="round" stroke-linecap="round"></path>
+                      </svg>
+                  </div>
+                  <button type="reset" class="close-btn">
+                      <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                          <path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                      </svg>
+                  </button>
+              </label>
+          </form>
+
+      </div>
+     
+        <style>
+          /* From Uiverse.io by satyamchaudharydev */ 
+/* From uiverse.io by @satyamchaudharydev */
+/* this button is inspired by -- whatsapp input */
+/* == type to see fully interactive and click the close buttom to remove the text  == */
+
+.form {
+--input-bg: #FFf;
+/*  background of input */
+--padding: 1.5em;
+--rotate: 80deg;
+/*  rotation degree of input*/
+--gap: 2em;
+/*  gap of items in input */
+--icon-change-color: #15A986;
+/*  when rotating changed icon color */
+--height: 40px;
+/*  height */
+width: 300px;
+padding-inline-end: 1em;
+/*  change this for padding in the end of input */
+background: var(--input-bg);
+position: relative;
+border-radius: 4px;
+}
+
+.form label {
+display: flex;
+align-items: center;
+width: 100%;
+height: var(--height);
+}
+
+.form input {
+width: 100%;
+padding-inline-start: calc(var(--padding) + var(--gap));
+outline: none;
+background: none;
+border: 0;
+}
+/* style for both icons -- search,close */
+.form svg {
+/* display: block; */
+color: #111;
+transition: 0.3s cubic-bezier(.4,0,.2,1);
+position: absolute;
+height: 15px;
+}
+/* search icon */
+.icon {
+position: absolute;
+left: var(--padding);
+transition: 0.3s cubic-bezier(.4,0,.2,1);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+/* arrow-icon*/
+.swap-off {
+transform: rotate(-80deg);
+opacity: 0;
+visibility: hidden;
+}
+/* close button */
+.close-btn {
+/* removing default bg of button */
+background: none;
+border: none;
+right: calc(var(--padding) - var(--gap));
+box-sizing: border-box;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #111;
+padding: 0.1em;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+transition: 0.3s;
+opacity: 0;
+transform: scale(0);
+visibility: hidden;
+}
+
+.form input:focus ~ .icon {
+transform: rotate(var(--rotate)) scale(1.3);
+}
+
+.form input:focus ~ .icon .swap-off {
+opacity: 1;
+transform: rotate(-80deg);
+visibility: visible;
+color: var(--icon-change-color);
+}
+
+.form input:focus ~ .icon .swap-on {
+opacity: 0;
+visibility: visible;
+}
+
+.form input:valid ~ .icon {
+transform: scale(1.3) rotate(var(--rotate))
+}
+
+.form input:valid ~ .icon .swap-off {
+opacity: 1;
+visibility: visible;
+color: var(--icon-change-color);
+}
+
+.form input:valid ~ .icon .swap-on {
+opacity: 0;
+visibility: visible;
+}
+
+.form input:valid ~ .close-btn {
+opacity: 1;
+visibility: visible;
+transform: scale(1);
+transition: 0s;
+}
+
+        </style>
+        </div>
+
+      <div class="card-body table-responsive p-0" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
+      
+        <style>
+          table {
+             width: 100%;
+             border-collapse: collapse;
+         }
+         th, td {
+             padding: 10px;
+             border: 1px solid #ddd;
+             text-align: left;
+             font-size: small;
+         }
+         th {
+             background-color: #f4f4f4;
+         }
+         body {
+         font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
+     }
+     
+     #product-form-container {
+      
+         margin: 0 auto; /* Center the form */
+         padding: 20px;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         background-color: #f9f9f9;
+     }
+     
+     .product-entry {
+         margin-bottom: 20px; /* Add space between product entries */
+     }
+     
+     label {
+         display: block;
+         margin-bottom: 5px;
+         font-weight: bold;
+         font-size: 12px; /* Small text size */
+     }
+     
+     input[type="text"],
+     input[type="number"],
+     textarea,
+     select {
+         width: 100%;
+         padding: 10px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         font-size: 12px; /* Small text size */
+     }
+     
+     .btn {
+         font-size: 12px; /* Small text size */
+         font-weight: bold; /* Bold text */
+     }
+     
+     .btn-block {
+         display: block;
+         width: 100%;
+         padding: 10px;
+         margin-top: 10px; /* Space between buttons */
+     }
+     
+     .btn-primary {
+         background-color: #007bff; /* Primary button color */
+         color: white;
+         border: none;
+         border-radius: 4px;
+     }
+     
+     .btn-primary:hover {
+         background-color: #0056b3; /* Darker shade on hover */
+     }
+     
+     .btn-success {
+         background-color: #28a745; /* Success button color */
+         color: white;
+         border: none;
+         border-radius: 4px;
+     }
+     
+     .btn-success:hover {
+         background-color: #218838; /* Darker shade on hover */
+     }
+     
+     .btn-danger {
+         background-color: #dc3545; /* Danger button color */
+         color: white;
+         border: none;
+         border-radius: 4px;
+     }
+     
+     .btn-danger:hover {
+         background-color: #c82333; /* Darker shade on hover */
+     }
+     
+     </style> 
+      <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Wanted Status</th>
+              <th>Last Known Location</th>
+              <th>Action</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            {% for suspect in page_obj %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ suspect.name }}</td>
+              <td>{{ suspect.address }}</td>
+              <td style="font-weight: bold;">
+                {% if suspect.wanted_status == 'yes' %}
+                  <i class="fas fa-exclamation-triangle text-danger"></i> Wanted
+                {% else %}
+                  <i class="fas fa-check-circle text-success"></i> Not Wanted
+                {% endif %}
+              </td>
+              <td>{{ suspect.last_seen_location }}</td>
+            <td>
+              <button class="btn btn-success btn-sm" style="font-weight: bold;">
+                <i class="fas fa-eye"></i> View
+              </button>
+            </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        
+
+        <nav aria-label="Page navigation my-3 ">
+          <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="First">
+                  <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true">&laquo;</a>
+              </li>
+            {% endif %}
+      
+            {% for i in page_obj.paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+              {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+      
+            {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                  <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+              </li>
+            {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" aria-disabled="true">&raquo;</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      <!-- Second Card -->
+     
+<ul id="detected-faces"></ul>
+
+<script>
+function updateDetectedFacesJS(detectedFaces) {
+    const detectedList = document.getElementById('detected-faces');
+    detectedList.innerHTML = '';  // Clear the current list
+
+    detectedFaces.forEach(face => {
+        let listItem = document.createElement('li');
+        listItem.textContent = `Name: ${face.name}, Status: ${face.wanted_status}, Last Seen: ${face.last_seen_location}`;
+        detectedList.appendChild(listItem);
+    });
+}
+</script>
+
+
+                  </div>
+              
+              
+                </div>
+              </div>
+            </div>
+        </div>
+    
+{% endblock main_content %}
+
+                      
+            
