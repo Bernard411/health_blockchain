@@ -69,8 +69,7 @@ def patients_database(request):
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Patient
-import random
-from faker import Faker
+import uuid  # Import uuid for generating a unique blockchain ID
 
 def add_patients(request):
     if request.method == 'POST':
@@ -101,12 +100,13 @@ def add_patients(request):
             phone=phone,
             emergency_contact=emergency_contact,
             insurance_provider=insurance_provider,
-            insurance_number=insurance_number
+            insurance_number=insurance_number,
+            blockchain_id=str(uuid.uuid4())  # Generate a unique blockchain ID
         )
         patient.save()
         
         # Redirect to the patient list after adding
-        return redirect('patient_list')
+        return redirect('login')
 
     return render(request, 'registration.html')
 
@@ -193,34 +193,131 @@ def patients(request):
 
 
 
+# from django.shortcuts import render, redirect
+# from .models import MedicalRecord, Patient
+# from django.contrib.auth.decorators import login_required
+
+# @login_required
+# def add_medical_record(request):
+#     if request.method == "POST":
+#         patient_id = request.POST.get("patient")
+#         diagnosis = request.POST.get("diagnosis")
+#         treatment = request.POST.get("treatment")
+#         blockchain_reference = request.POST.get("blockchain_reference")
+        
+#         patient = Patient.objects.get(id=patient_id)
+#         doctor = request.user  # Assuming the authenticated user is the doctor
+
+#         MedicalRecord.objects.create(
+#             patient=patient,
+#             doctor=doctor,  # Assuming doctor is a foreign key to the user
+#             diagnosis=diagnosis,
+#             treatment=treatment,
+#             blockchain_reference=blockchain_reference
+#         )
+#         return redirect('manage_health_records')
+    
+#     medical_records = MedicalRecord.objects.all()
+    
+    
+#     return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all(), "medical_records": medical_records} )
+
 from django.shortcuts import render, redirect
 from .models import MedicalRecord, Patient
 from django.contrib.auth.decorators import login_required
+from web3 import Web3
+from django.conf import settings
+from web3 import Account
+
+# Connect to the blockchain (assuming you have configured INFURA/other provider in your settings)
+web3 = Web3(Web3.HTTPProvider(settings.BLOCKCHAIN_PROVIDER_URL))
+
+# Load your contract ABI and address (these should be stored in settings or another secure location)
+CONTRACT_ABI = settings.CONTRACT_ABI
+CONTRACT_ADDRESS = settings.CONTRACT_ADDRESS
 
 @login_required
 def add_medical_record(request):
     if request.method == "POST":
+        # Gather data from the form
         patient_id = request.POST.get("patient")
         diagnosis = request.POST.get("diagnosis")
         treatment = request.POST.get("treatment")
-        blockchain_reference = request.POST.get("blockchain_reference")
         
         patient = Patient.objects.get(id=patient_id)
         doctor = request.user  # Assuming the authenticated user is the doctor
-
-        MedicalRecord.objects.create(
+        
+        # Ensure the patient has a blockchain ID
+        if not patient.blockchain_id:
+            print(f"Error: Patient {patient_id} has no blockchain ID.")
+            return render(request, 'doctors/add_medical_record.html', {
+                'patients': Patient.objects.all(),
+                "error": "Patient does not have a blockchain ID."
+            })
+        
+        # Create the medical record in Django (Database)
+        medical_record = MedicalRecord.objects.create(
             patient=patient,
-            doctor=doctor,  # Assuming doctor is a foreign key to the user
+            doctor=doctor,
             diagnosis=diagnosis,
-            treatment=treatment,
-            blockchain_reference=blockchain_reference
+            treatment=treatment
         )
-        return redirect('manage_health_records')
-    
+        
+        # Convert UUID to a uint256 (integer) to pass to the smart contract
+        blockchain_id_int = int(patient.blockchain_id.replace('-', ''), 16)  # Convert UUID to integer
+
+        # Add the record to the blockchain
+        try:
+            contract = web3.eth.contract(address=CONTRACT_ADDRESS, abi=CONTRACT_ABI)
+            account = Account.from_key(settings.DOCTOR_PRIVATE_KEY)  # Correct method for creating account
+            nonce = web3.eth.get_transaction_count(account.address)
+
+            # Build the transaction manually
+            txn = {
+                'chainId': 11155111,  # Sepolia testnet ID
+                'gas': 2000000,
+                'gasPrice': web3.to_wei(20, 'gwei'),  # Use to_wei for converting Gwei to Wei
+                'nonce': nonce,
+            }
+
+            # Call the contract function with arguments and build the transaction
+            txn_data = contract.functions.addRecord(
+                blockchain_id_int,  # Converted to uint256
+                diagnosis,
+                treatment
+            ).build_transaction(txn)  # Use build_transaction with an underscore
+
+            # Sign the transaction
+            signed_txn = web3.eth.account.sign_transaction(txn_data, private_key=settings.DOCTOR_PRIVATE_KEY)
+            
+            # Send the transaction to the blockchain
+            txn_hash = web3.eth.send_raw_transaction(signed_txn.raw_transaction)  # Use raw_transaction with an underscore
+            
+            # Wait for transaction receipt
+            txn_receipt = web3.eth.wait_for_transaction_receipt(txn_hash)
+
+            # If successful, save blockchain reference (transaction hash) to the medical record
+            medical_record.blockchain_reference = txn_hash.hex()
+            medical_record.save()
+
+            # Redirect after successfully adding the record
+            return redirect('manage_health_records')
+        
+        except Exception as e:
+            # Handle errors (log or display to the user)
+            print(f"An error occurred while adding the record to the blockchain: {e}")
+            return render(request, 'doctors/add_medical_record.html', {
+                'patients': Patient.objects.all(),
+                "error": "Failed to add medical record to the blockchain."
+            })
+
+    # Load data for form display
     medical_records = MedicalRecord.objects.all()
-    
-    
-    return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all(), "medical_records": medical_records} )
+    return render(request, 'doctors/add_medical_record.html', {
+        'patients': Patient.objects.all(),
+        "medical_records": medical_records
+    })
+
 
 
 from django.shortcuts import render, redirect

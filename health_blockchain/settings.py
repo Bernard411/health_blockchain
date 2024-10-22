@@ -133,4 +133,123 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login'
 
-WEB3_PROVIDER_URI = "https://sepolia.infura.io/v3/8dcbb55008924db8ac9f20ad26c64e1e"  # Or use another provider
+BLOCKCHAIN_PROVIDER_URL = "https://sepolia.infura.io/v3/8dcbb55008924db8ac9f20ad26c64e1e"
+
+CONTRACT_ABI = [
+    {
+        "anonymous": False,
+        "inputs": [
+            {
+                "indexed": True,
+                "internalType": "uint256",
+                "name": "patientId",
+                "type": "uint256"
+            },
+            {
+                "indexed": True,
+                "internalType": "address",
+                "name": "doctor",
+                "type": "address"
+            },
+            {
+                "indexed": False,
+                "internalType": "string",
+                "name": "diagnosis",
+                "type": "string"
+            },
+            {
+                "indexed": False,
+                "internalType": "string",
+                "name": "treatment",
+                "type": "string"
+            }
+        ],
+        "name": "RecordAdded",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "patientId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "diagnosis",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "treatment",
+                "type": "string"
+            }
+        ],
+        "name": "addRecord",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "patientId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRecord",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "doctor",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "diagnosis",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "treatment",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "records",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "doctor",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "diagnosis",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "treatment",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+
+CONTRACT_ADDRESS = "0x605D25C3dC49AAaEA03C46a7fDc3bA2cebD11aa2"
+DOCTOR_PRIVATE_KEY = "2182c82942eb17fe568eac16cc5e9d676ca505487c6d2006784799766cef283b"  # Use a test account's private key for signing transactions
+

@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import uuid
+from django.db import models
+from django.contrib.auth.models import User
+
 class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -11,9 +15,16 @@ class Patient(models.Model):
     emergency_contact = models.CharField(max_length=15)
     insurance_provider = models.CharField(max_length=100, null=True, blank=True)
     insurance_number = models.CharField(max_length=50, null=True, blank=True)
-    
+    blockchain_id = models.CharField(max_length=66, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.blockchain_id:
+            self.blockchain_id = str(uuid.uuid4())  # Generate UUID if it doesn't exist
+        super(Patient, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
 
 
 
