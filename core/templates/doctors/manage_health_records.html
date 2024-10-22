@@ -135,9 +135,9 @@ select {
                             <i class="fas fa-eye"></i> View
                         </a>
                         <!-- Share Button with icon -->
-                        <a href="#" class="btn btn-secondary btn-sm">
+                        <!-- <a href="#" class="btn btn-secondary btn-sm">
                             <i class="fas fa-share"></i> Share
-                        </a>
+                        </a> -->
                         
                     </td>
                 </tr>
@@ -162,6 +162,31 @@ select {
             </div>
             <div class="modal-body">
                 <p style="font-size: smaller;" id="blockchainReferenceText"></p>
+                <p>
+                  <b>Here’s what it means:</b>
+              </p>
+              <ul>
+                  <li>
+                      <b>Unique Identifier:</b> 
+                      Each transaction on the blockchain is assigned a unique hash that acts as an identifier. This hash can be used to look up the transaction on a blockchain explorer (for Sepolia, you can use Sepolia Etherscan).
+                  </li>
+                  <li>
+                      <b>Transaction Status:</b> 
+                      You can use the transaction hash to check the status of your transaction—whether it has been confirmed, is pending, or has failed.
+                  </li>
+                  <li>
+                      <b>Blockchain Reference:</b> 
+                      In your application, saving this hash in the <code>MedicalRecord</code> instance serves as a reference to the specific transaction that created the record on the blockchain. This allows you to track the on-chain activity related to that record.
+                  </li>
+              </ul>
+              
+              <p><b>To view the details of the transaction:</b></p>
+              <ol>
+                  <li>Go to the <b>Sepolia Etherscan site</b>.</li>
+                  <li>Paste the transaction hash into the search bar.</li>
+                  <li>You will see details like the sender, recipient, gas used, and the status of the transaction.</li>
+              </ol>
+              
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

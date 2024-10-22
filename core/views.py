@@ -306,6 +306,7 @@ def add_medical_record(request):
 
     # Load data for form display
     medical_records = MedicalRecord.objects.all()
+    patients = Patient.objects.all()
     paginator = Paginator(medical_records, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -348,6 +349,7 @@ def add_prescription(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'page_obj': page_obj,
+        "medical_records" : medical_records,
         
         'patients': patients,
     }
@@ -517,3 +519,44 @@ def search_records_x(request):
     query = request.GET.get('table_search', '')
     results = MedicalRecord.objects.filter(patient__name__icontains=query)  # Adjust this based on your search criteria
     return render(request, 'patient/x.html', {'results': results, 'query': query})
+
+
+# views.py
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import login
+from .forms import UserRegistrationForm, PatientRegistrationForm
+from .models import Patient
+
+def register(request):
+    if request.method == "POST":
+        user_form = UserRegistrationForm(request.POST)
+        patient_form = PatientRegistrationForm(request.POST)
+        
+        if user_form.is_valid() and patient_form.is_valid():
+            user = user_form.save(commit=False)
+            user.set_password(user_form.cleaned_data['password'])  # Hash the password
+            user.save()
+
+            # Create a Patient instance
+            patient = patient_form.save(commit=False)
+            patient.user = user  # Associate the patient with the user
+            patient.save()
+
+            # Generate blockchain ID
+            patient.blockchain_id = str(uuid.uuid4())
+            patient.save()
+
+            # Add user to the Patient group
+            patient_group = Group.objects.get(name='patients')
+            patient_group.user_set.add(user)
+
+            # Log the user in
+            login(request, user)
+            return redirect('login')  # Change to your desired redirect
+
+    else:
+        user_form = UserRegistrationForm()
+        patient_form = PatientRegistrationForm()
+    
+    return render(request, 'register.html', {'user_form': user_form, 'patient_form': patient_form})
