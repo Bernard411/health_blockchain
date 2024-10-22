@@ -397,3 +397,67 @@ def add_lab_test(request):
         )
         return redirect('add_lab_test')
     return render(request, 'doctors/add_lab_test.html', {'medical_records': MedicalRecord.objects.all(), 'test': LabTest.objects.all()})
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import MedicalRecord, Prescription, Appointment, Billing, LabTest
+
+def view_medical_record(request, record_id):
+    # Retrieve the medical record
+    medical_record = get_object_or_404(MedicalRecord, id=record_id)
+    
+    # Retrieve associated data
+    prescriptions = Prescription.objects.filter(medical_record=medical_record)
+    appointments = Appointment.objects.filter(patient=medical_record.patient)
+    billing_info = Billing.objects.filter(medical_record=medical_record).first()  # Assuming one billing record per medical record
+    lab_tests = LabTest.objects.filter(medical_record=medical_record)
+
+    context = {
+        'medical_record': medical_record,
+        'prescriptions': prescriptions,
+        'appointments': appointments,
+        'billing_info': billing_info,
+        'lab_tests': lab_tests,
+    }
+
+    return render(request, 'doctors/view_medical_record.html', context)
+
+
+from django.shortcuts import render
+from .models import MedicalRecord  # Assuming you're searching in MedicalRecord
+
+def search_records(request):
+    query = request.GET.get('table_search', '')
+    results = MedicalRecord.objects.filter(patient__name__icontains=query)  # Adjust this based on your search criteria
+    return render(request, 'doctors/x.html', {'results': results, 'query': query})
+
+
+def view_medical_record_x(request, record_id):
+    # Retrieve the medical record
+    medical_record = get_object_or_404(MedicalRecord, id=record_id)
+    
+    # Retrieve associated data
+    prescriptions = Prescription.objects.filter(medical_record=medical_record)
+    appointments = Appointment.objects.filter(patient=medical_record.patient)
+    billing_info = Billing.objects.filter(medical_record=medical_record).first()  # Assuming one billing record per medical record
+    lab_tests = LabTest.objects.filter(medical_record=medical_record)
+
+    context = {
+        'medical_record': medical_record,
+        'prescriptions': prescriptions,
+        'appointments': appointments,
+        'billing_info': billing_info,
+        'lab_tests': lab_tests,
+    }
+
+    return render(request, 'patient/view_medical_record.html', context)
+
+
+from django.shortcuts import render
+from .models import MedicalRecord  # Assuming you're searching in MedicalRecord
+
+def search_records_x(request):
+    query = request.GET.get('table_search', '')
+    results = MedicalRecord.objects.filter(patient__name__icontains=query)  # Adjust this based on your search criteria
+    return render(request, 'patient/x.html', {'results': results, 'query': query})

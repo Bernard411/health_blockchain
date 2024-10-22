@@ -28,6 +28,11 @@ urlpatterns = [
     # path('add-healthcare-provider/', views.add_healthcare_provider, name='add_healthcare_provider'),
     path('add-lab-test/', views.add_lab_test, name='add_lab_test'),
     path('preceptions/', views.manage_preceptions, name='preceptions'),
+
+ path('medical-record/<int:record_id>/', views.view_medical_record, name='view_medical_record'),
+ path('search/', views.search_records, name='search_records'),
+ path('medical-record/patient/<int:record_id>/', views.view_medical_record_x, name='view_medical_record_x'),
+ path('search/patient', views.search_records_x, name='search_records_x'),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

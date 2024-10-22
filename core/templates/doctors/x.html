@@ -1,3 +1,4 @@
+
 {% extends 'doctors/base_template.html' %}
 
 {% block main_content %}
@@ -99,6 +100,8 @@ select {
 <body>
     
         <h1 class="text-center my-4" style="font-size: small;">Medical Records</h1>
+        <h2>Search Results for "{{ query }}":</h2>
+        {% if results %}
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr>
@@ -113,7 +116,7 @@ select {
                 </tr>
             </thead>
             <tbody>
-                {% for record in medical_records %}
+                {% for record in results %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ record.patient.name }}</td>
@@ -178,7 +181,12 @@ select {
     }
 </script>
 
-    </div> 
+
+{% else %}
+    <p>No search performed yet.</p>
+{% endif %}
+
+</div> 
 </section>
 
 {% endblock main_content %}

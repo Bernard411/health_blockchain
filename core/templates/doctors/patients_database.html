@@ -13,24 +13,19 @@
     font-family: Poppins;
   }
 </style>
-<div class="card">
 
-  <div class="card-header">
-      <h3 class="card-title text-gray-dark" style="font-weight: bold; font-family: Poppins;">search patient</h3>
+  <form action="{% url 'search_records' %}" method="GET" style="margin-top: 3px;">
+    <div class="input-group input-group-sm" style="width: 350px;">
+        <input type="text" name="table_search" class="form-control float-right" placeholder="Search" required>
 
-      <div class="card-tools">
-      <div class="input-group input-group-sm" style="width: 350px;">
-          <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-default">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
 
-          <div class="input-group-append">
-          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-          </div>
-      </div>
-      </div>
-  </div>
-  <!-- /.card-header -->
-
-</div>
 <table class="table table-bordered border-primary">
   <thead class="table-dark">
           <tr>

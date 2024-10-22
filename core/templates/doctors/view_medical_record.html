@@ -1,0 +1,291 @@
+{% extends 'doctors/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+<style>
+  body {
+    font-family: Poppins, sans-serif;
+    font-size: small;
+ 
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1, h2 {
+    color: #007BFF;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #007BFF;
+    color: white;
+  }
+
+  .btn {
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Print styles */
+
+</style>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="logo text-center">
+            <img src="{% static 'j.png' %}" alt="Logo" style="max-width: 200px;">
+            <img src="{% static 'mw.png' %}" alt="Logo" style="max-width: 60px;">
+        </div>
+        <center>
+        <h1 style="font-weight: bold;">Medical Record for {{ medical_record.patient.name }}</h1>
+        </center>
+        <hr>
+        <h2 style="font-size: small;  font-weight: bold;">Medical Details</h2>
+        <table>
+            <tr>
+                <th>Diagnosis</th>
+                <td>{{ medical_record.diagnosis }}</td>
+            </tr>
+            <tr>
+                <th>Treatment</th>
+                <td>{{ medical_record.treatment }}</td>
+            </tr>
+            <tr>
+                <th>Date of Visit</th>
+                <td>{{ medical_record.date_of_visit }}</td>
+            </tr>
+            <tr>
+                <th>Blockchain Reference</th>
+                <td>{{ medical_record.blockchain_reference }}</td>
+            </tr>
+        </table>
+
+        <h2 style="font-size: small;  font-weight: bold;">Prescriptions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Drug Name</th>
+                    <th>Dosage</th>
+                    <th>Frequency</th>
+                    <th>Additional Instructions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prescription in prescriptions %}
+                    <tr>
+                        <td>{{ prescription.drug_name }}</td>
+                        <td>{{ prescription.dosage }}</td>
+                        <td>{{ prescription.frequency }}</td>
+                        <td>{{ prescription.additional_instructions|default:"N/A" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No prescriptions found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 style="font-size: small;  font-weight: bold;">Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.appointment_date }}</td>
+                        <td>{{ appointment.reason }}</td>
+                        <td>{{ appointment.status }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No appointments found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 style="font-size: small;  font-weight: bold;">Billing Information</h2>
+        <table>
+            <tbody>
+                {% if billing_info %}
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>{{ billing_info.total_amount }}</td>
+                    </tr>
+                    <tr>
+                        <th>Paid Amount</th>
+                        <td>{{ billing_info.paid_amount }}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Status</th>
+                        <td>{{ billing_info.payment_status }}</td>
+                    </tr>
+                    <tr>
+                        <th>Payment Date</th>
+                        <td>{{ billing_info.payment_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Transaction Reference</th>
+                        <td>{{ billing_info.transaction_reference }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No billing information found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <h2 style="font-size: small;  font-weight: bold;">Lab Tests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Result</th>
+                    <th>Conducted By</th>
+                    <th>Date Conducted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lab_test in lab_tests %}
+                    <tr>
+                        <td>{{ lab_test.test_name }}</td>
+                        <td>{{ lab_test.result }}</td>
+                        <td>{{ lab_test.conducted_by }}</td>
+                        <td>{{ lab_test.date_conducted }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No lab tests found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'manage_health_records' %}" class="btn mb-3">Back to Records</a>
+          <h4 class="text-center mb-4" style="letter-spacing: 0.1px; font-size: small;"><svg viewBox="-16 0 288 288" style="width: 20px;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M128.0418,254.7929 L31.8498,199.2549 L31.8498,88.3239 L127.9618,32.8319 L224.1508,88.3679 L224.1508,199.3029 L128.0418,254.7929 Z M236.3438,81.3289 L127.9618,18.7519 L19.6558,81.2839 L19.6558,206.2939 L128.0418,268.8719 L236.3438,206.3429 L236.3438,81.3289 Z" fill="#33363B"> </path> <path d="M47.8621,97.5463 C40.8111,109.8133 25.0911,114.0003 12.8251,106.9483 C0.5581,99.8973 -3.6289,84.1783 3.4231,71.9113 C10.4741,59.6443 26.1941,55.4583 38.4601,62.5093 C50.7271,69.6343 54.9141,85.2793 47.8621,97.5463" fill="#7EBC59"> </path> <path d="M208.138,97.5463 C201.086,85.2793 205.273,69.6343 217.539,62.5093 C229.807,55.4583 245.452,59.6443 252.577,71.9113 C259.628,84.1783 255.442,99.8233 243.175,106.9483 C230.909,114.0003 215.189,109.8133 208.138,97.5463" fill="#7EBC59"> </path> <path d="M127.9998,287.6445 C113.8238,287.6445 102.3648,276.1855 102.3648,262.0085 C102.3648,247.8315 113.8238,236.3735 127.9998,236.3735 C142.1768,236.3735 153.6348,247.8315 153.6348,262.0085 C153.6348,276.1125 142.1768,287.6445 127.9998,287.6445" fill="#7EBC59"> </path> <path d="M120.8626,50.2597 C123.1286,50.9137 125.5216,51.2707 127.9996,51.2707 C130.4866,51.2707 132.8866,50.9117 135.1586,50.2537 L212.5806,184.3477 C210.8476,185.9987 209.3176,187.9177 208.0636,190.0977 C206.8186,192.2647 205.9306,194.5397 205.3696,196.8557 L50.6326,196.8557 C50.0706,194.5417 49.1826,192.2667 47.9356,190.0977 C46.6776,187.9327 45.1506,186.0247 43.4266,184.3797 L120.8626,50.2597 Z M243.1016,180.6967 C236.8166,177.0827 229.6286,176.4267 223.1616,178.2887 L145.7216,44.1627 C150.5976,39.4977 153.6346,32.9287 153.6346,25.6357 C153.6346,11.4587 142.1766,0.0007 127.9996,0.0007 C113.8236,0.0007 102.3646,11.4587 102.3646,25.6357 C102.3646,32.9377 105.4096,39.5127 110.2946,44.1777 L32.8556,178.3027 C26.3856,176.4237 19.1976,177.0747 12.8986,180.6967 C0.6316,187.8217 -3.5544,203.4667 3.4966,215.7337 C10.5486,227.9997 26.1936,232.1867 38.5336,225.1347 C44.8256,221.4807 48.9856,215.5817 50.5996,209.0487 L205.3936,209.0487 C207.0036,215.6027 211.1656,221.5127 217.4666,225.1347 C229.7326,232.1867 245.4526,227.9997 252.5036,215.7337 C259.6286,203.4667 255.4416,187.8217 243.1016,180.6967 L243.1016,180.6967 Z" fill="#368CBF"> </path> </g> </g></svg><b>powered by</b> blockchain technology</h4>
+
+    </div>
+    <style>
+
+        body {
+        font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
+    }
+    
+    #product-form-container {
+     
+        margin: 0 auto; /* Center the form */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    .product-entry {
+        margin-bottom: 20px; /* Add space between product entries */
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 12px; /* Small text size */
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px; /* Small text size */
+    }
+    
+    .btn {
+        font-size: 12px; /* Small text size */
+        font-weight: bold; /* Bold text */
+    }
+    
+    .btn-block {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px; /* Space between buttons */
+    }
+    
+    .btn-primary {
+        background-color: #007bff; /* Primary button color */
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+    
+    .btn-primary:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+    }
+    
+    .btn-success {
+        background-color: #28a745; /* Success button color */
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+    
+    .btn-success:hover {
+        background-color: #218838; /* Darker shade on hover */
+    }
+    
+    .btn-danger {
+        background-color: #dc3545; /* Danger button color */
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+    
+    .btn-danger:hover {
+        background-color: #c82333; /* Darker shade on hover */
+    }
+    
+    </style> 
+</section>
+
+{% endblock main_content %}

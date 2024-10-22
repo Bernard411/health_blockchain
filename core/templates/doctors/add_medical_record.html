@@ -38,7 +38,9 @@
         <label for="treatment">Treatment:</label><br>
         <textarea name="treatment" id="treatment"></textarea><br>
 
-        <button type="submit">Add Medical Record</button>
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-plus"></i> Add Medical Record
+        </button>
     </form>
 </body>
 </html>
@@ -168,7 +170,7 @@ select {
                
                 <td>
                     <!-- View Button with icon -->
-                    <a href="#" class="btn btn-primary btn-sm">
+                    <a href="{% url 'view_medical_record' record.id %}" class="btn btn-primary btn-sm">
                         <i class="fas fa-eye"></i> View
                     </a>
                     <!-- Share Button with icon -->
