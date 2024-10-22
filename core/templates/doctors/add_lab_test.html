@@ -21,7 +21,7 @@
     <title>Add Lab Test</title>
 </head>
 <body>
-    <h1>Add Lab Test</h1>
+    <h1 style="font-size: medium; font-weight: bold;">Add Lab Test</h1>
     <form method="POST">
         {% csrf_token %}
         <label for="medical_record">Medical Record:</label>
@@ -47,19 +47,7 @@
 
  
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-        font-size: small;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
+
     body {
     font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
 }
@@ -141,7 +129,40 @@ select {
 }
 
 </style> 
+<h1 class="text-center my-4" style="font-size: small;">Manage Lab Tests</h1>
+<table class="table table-bordered border-primary">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Test Name</th>
+            <th>Result</th>
+            <th>Date Conducted</th>
+            <th>Conducted By</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lab_test in test %}
+        <tr>
+            <td>{{ lab_test.id }}</td>
+            <td>{{ lab_test.medical_record.patient.name }}</td>
+            <td>{{ lab_test.test_name }}</td>
+            <td>{{ lab_test.result }}</td>
+            <td>{{ lab_test.date_conducted }}</td>
+            <td>{{ lab_test.conducted_by }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No lab tests found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
     </div> 
 </section>
+
+
+    
+    </div>
 
 {% endblock main_content %}

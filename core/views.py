@@ -242,8 +242,9 @@ def add_billing(request):
             payment_date=payment_date,
             transaction_reference=transaction_reference
         )
-        return redirect('success_page')
-    return render(request, 'doctors/add_billing.html', {'patients': Patient.objects.all(), 'medical_records': MedicalRecord.objects.all()})
+        return redirect('add_billing')
+    
+    return render(request, 'doctors/add_billing.html', {'patients': Patient.objects.all(), 'medical_records': MedicalRecord.objects.all(), 'billing': Billing.objects.all()})
 
 
 from django.shortcuts import render, redirect
@@ -264,5 +265,5 @@ def add_lab_test(request):
             result=result,
             conducted_by=conducted_by
         )
-        return redirect('success_page')
-    return render(request, 'doctors/add_lab_test.html', {'medical_records': MedicalRecord.objects.all()})
+        return redirect('add_lab_test')
+    return render(request, 'doctors/add_lab_test.html', {'medical_records': MedicalRecord.objects.all(), 'test': LabTest.objects.all()})
