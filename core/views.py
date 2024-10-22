@@ -26,7 +26,7 @@ def login_view(request):
             if user.is_superuser:
                 return redirect('headoffice')
             elif user.groups.filter(name='patients').exists():
-                return redirect('officers')
+                return redirect('patients')
             elif user.groups.filter(name='doctors').exists():
                 return redirect('patients_database')
             else:
@@ -124,3 +124,7 @@ def add_health_records(request):
 def manage_health_records(request):
     # Logic to retrieve and manage health records
     return render(request, 'manage_health_records.html', context={})
+
+
+def patients(request):
+    return render(request, 'patient/home_content.html')

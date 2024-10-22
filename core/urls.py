@@ -18,6 +18,9 @@ urlpatterns = [
   path('manage-patients/', views.manage_patients, name='manage_patients'),
   path('add-health-records/', views.add_health_records, name='add_health_records'),
   path('manage-health-records/', views.manage_health_records, name='manage_health_records'),
+
+
+  path('home/patients/', views.patients, name='patients'),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
