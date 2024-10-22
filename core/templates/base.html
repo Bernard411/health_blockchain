@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ministry of health</title>
+  <title>Comprehensive Facial Identification and Law Enforcement Support System</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -30,78 +30,15 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 
-    {% comment %} For Custom CSS {% endcomment %}
-
-    {% block custom_css %}
-    {% endblock custom_css %}
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed ">
-  <div class="wrapper ">
 
-  <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-light navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-      </ul>
 
-      <h4 class="d-none d-sm-block" style="margin-left: 10px; margin-top: 5px; font-weight: bold; text-transform: lowercase; font-size: smaller;">
-        BLOCKCHAIN-BASED HEALTHCARE RECORDS
-      </h4>
-      
-      <ul class="navbar-nav ml-auto">
-      
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="fas fa-cog"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-          
-          <a href="" class="dropdown-item">
-            <i class="fas fa-user-edit mr-2"></i> Update Profile
-          </a>
+{% block content %}
 
-          <div class="dropdown-divider"></div>
-          <a href="" class="dropdown-item">
-            <i class="fas fa-power-off mr-2"></i> Logout
-          </a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-    </ul>
 
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    {% include 'sidebar_template.html' with user=user id=id %}
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-    <!-- Content Header (Page header) -->
-      <div class="content-header">
-      
-      </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      {% block main_content %}
-      {% endblock main_content %}
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    {% include 'footer.html' %}
-
-    
-  </div>
-  <!-- ./wrapper -->
-
+{% endblock %}
 
 <!-- jQuery -->
 <script src="{% static "jquery/jquery.min.js"  %}"></script>
@@ -137,10 +74,5 @@
 <script src="{% static 'dist/js/pages/dashboard.js'  %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'dist/js/demo.js'  %}"></script>
-
-{% comment %} For Custom JS {% endcomment %}
-{% block custom_js %}
-{% endblock custom_js %}
-
 </body>
 </html>

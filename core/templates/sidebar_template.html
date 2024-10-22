@@ -1,6 +1,6 @@
 {% load static %}
 
-<aside class="main-sidebar sidebar-dark-warning elevation-4" style="font-size: small;">
+<aside class="main-sidebar sidebar-dark-success elevation-4" style="font-size: small;">
   <!-- Brand Logo -->
   <style>
     body {
@@ -22,35 +22,35 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/threat-detection/' %}active{% endif %}">
+          <a href="{% url 'patients_database' %}" class="nav-link {% if request.path == '/patients-database/' %}active{% endif %}">
             <i class="nav-icon fas fa-users"></i>
             <span>Patients Database</span>
           </a>
         </li>
         
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/criminal-database/' %}active{% endif %}">
+          <a href="{% url 'add_patients' %}" class="nav-link {% if request.path == '/add-patients/' %}active{% endif %}">
             <i class="nav-icon fas fa-user-plus"></i>
             <span>Add Patients</span>
           </a>
         </li>
         
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/manage-patients/' %}active{% endif %}">
+          <a href="{% url 'manage_patients' %}" class="nav-link {% if request.path == '/manage-patients/' %}active{% endif %}">
             <i class="nav-icon fas fa-user-edit"></i>
             <span>Manage Patients</span>
           </a>
         </li>
         
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
+          <a href="{% url 'add_health_records' %}" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-medical"></i>
             <span>Add Health Records</span>
           </a>
         </li>
         
         <li class="nav-item">
-          <a href="" class="nav-link {% if request.path == '/manage-health-records/' %}active{% endif %}">
+          <a href="{% url 'manage_health_records' %}" class="nav-link {% if request.path == '/manage-health-records/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-medical-alt"></i>
             <span>Manage Health Records</span>
           </a>
@@ -61,7 +61,7 @@
    
 
         <li class="nav-item">
-          <a href="" class="nav-link">
+          <a href="{% url 'logout' %}" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </a>
