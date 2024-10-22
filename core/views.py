@@ -48,7 +48,7 @@ def logoutuser(request):
 
 
 def home(request):
-    return render(request, 'home_content.html')
+    return render(request, 'doctors/home_content.html')
 
 
 
@@ -63,7 +63,7 @@ def patients_database(request):
         'patients': patients,
     }
  
-    return render(request, 'patients_database.html', context)
+    return render(request, 'doctors/patients_database.html', context)
 
 
 from django.shortcuts import render, redirect
@@ -113,18 +113,140 @@ def add_patients(request):
 
 def manage_patients(request):
     # Logic to retrieve and manage patient records
-    return render(request, 'manage_patients.html', context={})
+    return render(request, 'doctors/manage_patients.html', context={})
 
-def add_health_records(request):
-    if request.method == 'POST':
-        # Logic to add health records
-        pass
-    return render(request, 'add_health_records.html', context={})
 
 def manage_health_records(request):
     # Logic to retrieve and manage health records
-    return render(request, 'manage_health_records.html', context={})
+    return render(request, 'doctors/manage_health_records.html', context={})
 
 
 def patients(request):
     return render(request, 'patient/home_content.html')
+
+
+
+from django.shortcuts import render, redirect
+from .models import MedicalRecord, Patient
+
+def add_medical_record(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patient")
+        # doctor_id = request.POST.get("doctor")
+        diagnosis = request.POST.get("diagnosis")
+        treatment = request.POST.get("treatment")
+        blockchain_reference = request.POST.get("blockchain_reference")
+        
+        patient = Patient.objects.get(id=patient_id)
+        # doctor = Doctor.objects.get(id=doctor_id)
+
+        MedicalRecord.objects.create(
+            patient=patient,
+            # doctor=doctor,
+            diagnosis=diagnosis,
+            treatment=treatment,
+            blockchain_reference=blockchain_reference
+        )
+        return redirect('success_page')  # Redirect after saving
+    return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all()})
+
+
+from django.shortcuts import render, redirect
+from .models import Prescription, MedicalRecord
+
+def add_prescription(request):
+    if request.method == "POST":
+        medical_record_id = request.POST.get("medical_record")
+        drug_name = request.POST.get("drug_name")
+        dosage = request.POST.get("dosage")
+        frequency = request.POST.get("frequency")
+        duration = request.POST.get("duration")
+        additional_instructions = request.POST.get("additional_instructions")
+        
+        medical_record = MedicalRecord.objects.get(id=medical_record_id)
+
+        Prescription.objects.create(
+            medical_record=medical_record,
+            drug_name=drug_name,
+            dosage=dosage,
+            frequency=frequency,
+            duration=duration,
+            additional_instructions=additional_instructions
+        )
+        return redirect('success_page')
+    return render(request, 'doctors/add_prescription.html', {'medical_records': MedicalRecord.objects.all()})
+
+from django.shortcuts import render, redirect
+from .models import Appointment, Patient
+
+def add_appointment(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patient")
+        # doctor_id = request.POST.get("doctor")
+        appointment_date = request.POST.get("appointment_date")
+        reason = request.POST.get("reason")
+        status = request.POST.get("status")
+
+        patient = Patient.objects.get(id=patient_id)
+        # doctor = Doctor.objects.get(id=doctor_id)
+
+        Appointment.objects.create(
+            patient=patient,
+            # doctor=doctor,
+            appointment_date=appointment_date,
+            reason=reason,
+            status=status
+        )
+        return redirect('success_page')
+    return render(request, 'doctors/add_appointment.html', {'patients': Patient.objects.all()})
+
+
+from django.shortcuts import render, redirect
+from .models import Billing, Patient, MedicalRecord
+
+def add_billing(request):
+    if request.method == "POST":
+        patient_id = request.POST.get("patient")
+        medical_record_id = request.POST.get("medical_record")
+        total_amount = request.POST.get("total_amount")
+        paid_amount = request.POST.get("paid_amount")
+        payment_status = request.POST.get("payment_status")
+        payment_date = request.POST.get("payment_date")
+        transaction_reference = request.POST.get("transaction_reference")
+
+        patient = Patient.objects.get(id=patient_id)
+        medical_record = MedicalRecord.objects.get(id=medical_record_id)
+
+        Billing.objects.create(
+            patient=patient,
+            medical_record=medical_record,
+            total_amount=total_amount,
+            paid_amount=paid_amount,
+            payment_status=payment_status,
+            payment_date=payment_date,
+            transaction_reference=transaction_reference
+        )
+        return redirect('success_page')
+    return render(request, 'doctors/add_billing.html', {'patients': Patient.objects.all(), 'medical_records': MedicalRecord.objects.all()})
+
+
+from django.shortcuts import render, redirect
+from .models import LabTest, MedicalRecord
+
+def add_lab_test(request):
+    if request.method == "POST":
+        medical_record_id = request.POST.get("medical_record")
+        test_name = request.POST.get("test_name")
+        result = request.POST.get("result")
+        conducted_by = request.POST.get("conducted_by")
+        
+        medical_record = MedicalRecord.objects.get(id=medical_record_id)
+
+        LabTest.objects.create(
+            medical_record=medical_record,
+            test_name=test_name,
+            result=result,
+            conducted_by=conducted_by
+        )
+        return redirect('success_page')
+    return render(request, 'doctors/add_lab_test.html', {'medical_records': MedicalRecord.objects.all()})

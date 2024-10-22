@@ -16,20 +16,10 @@ class Patient(models.Model):
         return self.name
 
 
-class Doctor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    specialization = models.CharField(max_length=100)
-    license_number = models.CharField(max_length=50, unique=True)
-    phone = models.CharField(max_length=15)
-    email = models.EmailField()
 
-    def __str__(self):
-        return f"Dr. {self.name} ({self.specialization})"
 
 class MedicalRecord(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     diagnosis = models.TextField()
     treatment = models.TextField()
     date_of_visit = models.DateTimeField(auto_now_add=True)
@@ -53,7 +43,6 @@ class Prescription(models.Model):
 
 class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     appointment_date = models.DateTimeField()
     reason = models.TextField()
     status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled')])

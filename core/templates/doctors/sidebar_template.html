@@ -21,6 +21,7 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Patients Database -->
         <li class="nav-item">
           <a href="{% url 'patients_database' %}" class="nav-link {% if request.path == '/patients-database/' %}active{% endif %}">
             <i class="nav-icon fas fa-users"></i>
@@ -28,13 +29,7 @@
           </a>
         </li>
         
-        <li class="nav-item">
-          <a href="{% url 'add_patients' %}" class="nav-link {% if request.path == '/add-patients/' %}active{% endif %}">
-            <i class="nav-icon fas fa-user-plus"></i>
-            <span>Add Patients</span>
-          </a>
-        </li>
-        
+        <!-- Manage Patients -->
         <li class="nav-item">
           <a href="{% url 'manage_patients' %}" class="nav-link {% if request.path == '/manage-patients/' %}active{% endif %}">
             <i class="nav-icon fas fa-user-edit"></i>
@@ -42,13 +37,15 @@
           </a>
         </li>
         
+        <!-- Add Health Records -->
         <li class="nav-item">
-          <a href="{% url 'add_health_records' %}" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
+          <a href="{% url 'add_medical_record' %}" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-medical"></i>
             <span>Add Health Records</span>
           </a>
         </li>
         
+        <!-- Manage Health Records -->
         <li class="nav-item">
           <a href="{% url 'manage_health_records' %}" class="nav-link {% if request.path == '/manage-health-records/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-medical-alt"></i>
@@ -56,19 +53,64 @@
           </a>
         </li>
         
-
+        <!-- Manage Doctors -->
+        <li class="nav-item">
+          <a href="" class="nav-link {% if request.path == '/manage-doctors/' %}active{% endif %}">
+            <i class="nav-icon fas fa-user-md"></i>
+            <span>Manage Doctors</span>
+          </a>
+        </li>
         
-   
-
+        <!-- Manage Appointments -->
+        <li class="nav-item">
+          <a href="" class="nav-link {% if request.path == '/manage-appointments/' %}active{% endif %}">
+            <i class="nav-icon fas fa-calendar-check"></i>
+            <span>Manage Appointments</span>
+          </a>
+        </li>
+        
+        <!-- Manage Prescriptions -->
+        <li class="nav-item">
+          <a href="{% url 'add_prescription' %}" class="nav-link {% if request.path == '/manage-prescriptions/' %}active{% endif %}">
+            <i class="nav-icon fas fa-pills"></i>
+            <span>Manage Prescriptions</span>
+          </a>
+        </li>
+        
+        <!-- Billing -->
+        <li class="nav-item">
+          <a href="{% url 'add_billing' %}" class="nav-link {% if request.path == '/manage-billing/' %}active{% endif %}">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+            <span>Billing</span>
+          </a>
+        </li>
+        
+        <!-- Manage Lab Tests -->
+        <li class="nav-item">
+          <a href="{% url 'add_lab_test' %}" class="nav-link {% if request.path == '/manage-lab-tests/' %}active{% endif %}">
+            <i class="nav-icon fas fa-flask"></i>
+            <span>Manage Lab Tests</span>
+          </a>
+        </li>
+        
+        <!-- Healthcare Providers -->
+        <!-- <li class="nav-item">
+          <a href="" class="nav-link {% if request.path == '/manage-healthcare-providers/' %}active{% endif %}">
+            <i class="nav-icon fas fa-hospital"></i>
+            <span>Healthcare Providers</span>
+          </a>
+        </li> -->
+    
+        <!-- Logout -->
         <li class="nav-item">
           <a href="{% url 'logout' %}" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </a>
         </li>
-        
       </ul>
     </nav>
+    
     <!-- /.sidebar-menu -->
   </div>
   <!-- /.sidebar -->
