@@ -54,24 +54,31 @@
         </li>
         
         <!-- Manage Doctors -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="" class="nav-link {% if request.path == '/manage-doctors/' %}active{% endif %}">
             <i class="nav-icon fas fa-user-md"></i>
             <span>Manage Doctors</span>
           </a>
-        </li>
+        </li> -->
         
         <!-- Manage Appointments -->
         <li class="nav-item">
           <a href="" class="nav-link {% if request.path == '/manage-appointments/' %}active{% endif %}">
             <i class="nav-icon fas fa-calendar-check"></i>
-            <span>Manage Appointments</span>
+            <span>Appointments</span>
           </a>
         </li>
         
         <!-- Manage Prescriptions -->
         <li class="nav-item">
           <a href="{% url 'add_prescription' %}" class="nav-link {% if request.path == '/manage-prescriptions/' %}active{% endif %}">
+            <i class="nav-icon fas fa-pills"></i>
+            <span>Prescriptions</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'preceptions' %}" class="nav-link {% if request.path == '/manage-prescriptions/' %}active{% endif %}">
             <i class="nav-icon fas fa-pills"></i>
             <span>Manage Prescriptions</span>
           </a>

@@ -26,7 +26,7 @@ urlpatterns = [
     path('add-billing/', views.add_billing, name='add_billing'),
     # path('add-healthcare-provider/', views.add_healthcare_provider, name='add_healthcare_provider'),
     path('add-lab-test/', views.add_lab_test, name='add_lab_test'),
-    # path('add-blockchain-transaction/', views.add_blockchain_transaction, name='add_blockchain_transaction'),
+    path('preceptions/', views.manage_preceptions, name='preceptions'),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

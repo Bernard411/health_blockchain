@@ -55,20 +55,40 @@
 </body>
 </html>
 
+        <h1 class="text-center my-4" style="font-size: small;">Billing Information</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Total Amount</th>
+                    <th>Paid Amount</th>
+                    <th>Payment Status</th>
+                    <th>Transaction Reference</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in billings %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ bill.patient.name }}</td>
+                    <td>{{ bill.total_amount }}</td>
+                    <td>{{ bill.paid_amount }}</td>
+                    <td>{{ bill.payment_status }}</td>
+                    <td>{{ bill.transaction_reference }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No billing records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-        font-size: small;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
+ 
     body {
     font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
 }

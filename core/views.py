@@ -117,8 +117,19 @@ def manage_patients(request):
 
 
 def manage_health_records(request):
-    # Logic to retrieve and manage health records
-    return render(request, 'doctors/manage_health_records.html', context={})
+    medical_records = MedicalRecord.objects.all()
+    context = {
+        "medical_records" : medical_records
+    }
+    return render(request, 'doctors/manage_health_records.html', context)
+
+
+def manage_preceptions(request):
+    preceptions = Prescription.objects.all()
+    context = {
+        "preceptions" : preceptions
+    }
+    return render(request, 'doctors/prescription.html', context)
 
 
 def patients(request):
@@ -128,27 +139,32 @@ def patients(request):
 
 from django.shortcuts import render, redirect
 from .models import MedicalRecord, Patient
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def add_medical_record(request):
     if request.method == "POST":
         patient_id = request.POST.get("patient")
-        # doctor_id = request.POST.get("doctor")
         diagnosis = request.POST.get("diagnosis")
         treatment = request.POST.get("treatment")
         blockchain_reference = request.POST.get("blockchain_reference")
         
         patient = Patient.objects.get(id=patient_id)
-        # doctor = Doctor.objects.get(id=doctor_id)
+        doctor = request.user  # Assuming the authenticated user is the doctor
 
         MedicalRecord.objects.create(
             patient=patient,
-            # doctor=doctor,
+            doctor=doctor,  # Assuming doctor is a foreign key to the user
             diagnosis=diagnosis,
             treatment=treatment,
             blockchain_reference=blockchain_reference
         )
-        return redirect('success_page')  # Redirect after saving
-    return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all()})
+        return redirect('manage_health_records')
+    
+    medical_records = MedicalRecord.objects.all()
+    
+    
+    return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all(), "medical_records": medical_records} )
 
 
 from django.shortcuts import render, redirect
@@ -173,7 +189,7 @@ def add_prescription(request):
             duration=duration,
             additional_instructions=additional_instructions
         )
-        return redirect('success_page')
+        return redirect('preceptions')
     return render(request, 'doctors/add_prescription.html', {'medical_records': MedicalRecord.objects.all()})
 
 from django.shortcuts import render, redirect

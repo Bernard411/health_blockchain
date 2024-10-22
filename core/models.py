@@ -20,13 +20,14 @@ class Patient(models.Model):
 
 class MedicalRecord(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(User, on_delete=models.CASCADE)
     diagnosis = models.TextField()
     treatment = models.TextField()
     date_of_visit = models.DateTimeField(auto_now_add=True)
     blockchain_reference = models.CharField(max_length=255, null=True, blank=True)  # To store blockchain transaction or hash
     
     def __str__(self):
-        return f"Record for {self.patient.name} by {self.doctor.name} on {self.date_of_visit}"
+        return f"Record for {self.patient.name}"
 
 
 class Prescription(models.Model):

@@ -44,19 +44,7 @@
 </html>
 
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: left;
-        font-size: small;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
+
     body {
     font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
 }
@@ -138,6 +126,57 @@ select {
 }
 
 </style> 
+    </div> 
+</section>
+
+<section class="content ">
+    <div class="container-fluid  ">
+
+<style>
+  body {
+    font-size: small;
+    font-family: Poppins;
+  }
+</style>
+
+<body>
+    
+        <h1 class="text-center my-4" style="font-size: small;">Recent Medical Records</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Doctor</th>
+                    <th>Diagnosis</th>
+                    <th>Treatment</th>
+                    <th>Date of Visit</th>
+                    <th>Blockchain Reference</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in medical_records %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.patient.name }}</td>
+                    <td>{{ record.doctor }}</td>
+                    <td>{{ record.diagnosis }}</td>
+                    <td>{{ record.treatment }}</td>
+                    <td>{{ record.date_of_visit }}</td>
+                    <td>{{ record.blockchain_reference }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+ 
     </div> 
 </section>
 
