@@ -32,7 +32,7 @@ def login_view(request):
             if user.is_superuser:
                 return redirect('headoffice')
             elif user.groups.filter(name='patients').exists():
-                return redirect('patients')
+                return redirect('manage_health_records_x')
             elif user.groups.filter(name='doctors').exists():
                 return redirect('patients_database')
             else:
@@ -153,9 +153,15 @@ def manage_patients(request):
 @login_required
 def manage_health_records(request):
     medical_records = MedicalRecord.objects.all()
+    paginator = Paginator(medical_records, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "medical_records" : medical_records
+        'page_obj': page_obj,
+        
+        'patients': patients,
     }
+   
     return render(request, 'doctors/manage_health_records.html', context)
 
 
@@ -178,20 +184,32 @@ def manage_health_records_patient(request):
 
     # Get medical records associated with the patient
     medical_records = MedicalRecord.objects.filter(patient=patient)
+    paginator = Paginator(medical_records, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        
+        'patients': patients,
+    }
+ 
 
     # Render the template with the medical records
-    return render(request, 'patient/manage_health_records.html', {
-        'medical_records': medical_records
-    })
-
+    return render(request, 'patient/manage_health_records.html', context)
 
 
 @login_required
 def manage_preceptions(request):
     preceptions = Prescription.objects.all()
+    paginator = Paginator(preceptions, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "preceptions" : preceptions
+        'page_obj': page_obj,
+        
+        'patients': patients,
     }
+    
     return render(request, 'doctors/prescription.html', context)
 
 
@@ -288,10 +306,16 @@ def add_medical_record(request):
 
     # Load data for form display
     medical_records = MedicalRecord.objects.all()
-    return render(request, 'doctors/add_medical_record.html', {
-        'patients': Patient.objects.all(),
-        "medical_records": medical_records
-    })
+    paginator = Paginator(medical_records, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    patient = Patient.objects.all()
+    context = {
+        'page_obj': page_obj,
+        
+        'patients': patients,
+    }
+    return render(request, 'doctors/add_medical_record.html', context)
 
 
 
@@ -318,7 +342,16 @@ def add_prescription(request):
             additional_instructions=additional_instructions
         )
         return redirect('preceptions')
-    return render(request, 'doctors/add_prescription.html', {'medical_records': MedicalRecord.objects.all()})
+    medical_records = MedicalRecord.objects.all()
+    paginator = Paginator(medical_records, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        
+        'patients': patients,
+    }
+    return render(request, 'doctors/add_prescription.html', context)
 
 from django.shortcuts import render, redirect
 from .models import Appointment, Patient
@@ -342,6 +375,7 @@ def add_appointment(request):
             status=status
         )
         return redirect('success_page')
+    
     return render(request, 'doctors/add_appointment.html', {'patients': Patient.objects.all()})
 
 
@@ -373,8 +407,20 @@ def add_billing(request):
             transaction_reference=transaction_reference
         )
         return redirect('add_billing')
+    medical_records = MedicalRecord.objects.all()
+    billing= Billing.objects.all()
+    paginator = Paginator(billing, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    patients = Patient.objects.all()
+   
+    context = {
+        'page_obj': page_obj,
+        "medical_records" : medical_records,
+        'patients': patients,
+    }
     
-    return render(request, 'doctors/add_billing.html', {'patients': Patient.objects.all(), 'medical_records': MedicalRecord.objects.all(), 'billing': Billing.objects.all()})
+    return render(request, 'doctors/add_billing.html', context)
 
 
 from django.shortcuts import render, redirect
@@ -396,7 +442,17 @@ def add_lab_test(request):
             conducted_by=conducted_by
         )
         return redirect('add_lab_test')
-    return render(request, 'doctors/add_lab_test.html', {'medical_records': MedicalRecord.objects.all(), 'test': LabTest.objects.all()})
+    medical_records = MedicalRecord.objects.all()
+    test = LabTest.objects.all()
+    paginator = Paginator(test, 8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        "medical_records" : medical_records
+    }
+    return render(request, 'doctors/add_lab_test.html', context)
 
 
 
