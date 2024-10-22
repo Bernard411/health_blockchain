@@ -15,6 +15,12 @@ from .EmailBackEnd import EmailBackEnd
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import login as auth_login
 from .models import *
+from django.shortcuts import render, redirect
+from .models import MedicalRecord, Patient
+from django.contrib.auth.decorators import login_required
+from web3 import Web3
+from django.conf import settings
+from web3 import Account
 
 
 
@@ -46,12 +52,12 @@ def logoutuser(request):
     return redirect('login')
 
 
-
+@login_required
 def home(request):
     return render(request, 'doctors/home_content.html')
 
 
-
+@login_required
 def patients_database(request):
     patients = Patient.objects.all() 
     paginator = Paginator(patients, 8)
@@ -116,6 +122,7 @@ from django.shortcuts import render
 from .models import Patient, LabTest, MedicalRecord
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # Import Paginator
 
+@login_required
 def manage_patients(request):
     patients = Patient.objects.all()  # Fetch all patients
     patient_data = []
@@ -143,7 +150,7 @@ def manage_patients(request):
 
     return render(request, 'doctors/manage_patients.html', {'page_obj': page_obj})
 
-
+@login_required
 def manage_health_records(request):
     medical_records = MedicalRecord.objects.all()
     context = {
@@ -154,7 +161,7 @@ def manage_health_records(request):
 
 from django.shortcuts import render
 from .models import MedicalRecord, Patient
-
+@login_required
 def manage_health_records_patient(request):
     # Get the authenticated user
     user = request.user
@@ -179,7 +186,7 @@ def manage_health_records_patient(request):
 
 
 
-
+@login_required
 def manage_preceptions(request):
     preceptions = Prescription.objects.all()
     context = {
@@ -193,41 +200,9 @@ def patients(request):
 
 
 
-# from django.shortcuts import render, redirect
-# from .models import MedicalRecord, Patient
-# from django.contrib.auth.decorators import login_required
 
-# @login_required
-# def add_medical_record(request):
-#     if request.method == "POST":
-#         patient_id = request.POST.get("patient")
-#         diagnosis = request.POST.get("diagnosis")
-#         treatment = request.POST.get("treatment")
-#         blockchain_reference = request.POST.get("blockchain_reference")
-        
-#         patient = Patient.objects.get(id=patient_id)
-#         doctor = request.user  # Assuming the authenticated user is the doctor
 
-#         MedicalRecord.objects.create(
-#             patient=patient,
-#             doctor=doctor,  # Assuming doctor is a foreign key to the user
-#             diagnosis=diagnosis,
-#             treatment=treatment,
-#             blockchain_reference=blockchain_reference
-#         )
-#         return redirect('manage_health_records')
-    
-#     medical_records = MedicalRecord.objects.all()
-    
-    
-#     return render(request, 'doctors/add_medical_record.html', {'patients': Patient.objects.all(), "medical_records": medical_records} )
 
-from django.shortcuts import render, redirect
-from .models import MedicalRecord, Patient
-from django.contrib.auth.decorators import login_required
-from web3 import Web3
-from django.conf import settings
-from web3 import Account
 
 # Connect to the blockchain (assuming you have configured INFURA/other provider in your settings)
 web3 = Web3(Web3.HTTPProvider(settings.BLOCKCHAIN_PROVIDER_URL))
@@ -322,7 +297,7 @@ def add_medical_record(request):
 
 from django.shortcuts import render, redirect
 from .models import Prescription, MedicalRecord
-
+@login_required
 def add_prescription(request):
     if request.method == "POST":
         medical_record_id = request.POST.get("medical_record")
@@ -347,7 +322,7 @@ def add_prescription(request):
 
 from django.shortcuts import render, redirect
 from .models import Appointment, Patient
-
+@login_required
 def add_appointment(request):
     if request.method == "POST":
         patient_id = request.POST.get("patient")
@@ -372,6 +347,8 @@ def add_appointment(request):
 
 from django.shortcuts import render, redirect
 from .models import Billing, Patient, MedicalRecord
+
+@login_required
 
 def add_billing(request):
     if request.method == "POST":
@@ -402,7 +379,7 @@ def add_billing(request):
 
 from django.shortcuts import render, redirect
 from .models import LabTest, MedicalRecord
-
+@login_required
 def add_lab_test(request):
     if request.method == "POST":
         medical_record_id = request.POST.get("medical_record")
