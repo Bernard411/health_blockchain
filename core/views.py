@@ -111,9 +111,37 @@ def add_patients(request):
     return render(request, 'registration.html')
 
 
+
+from django.shortcuts import render
+from .models import Patient, LabTest, MedicalRecord
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # Import Paginator
+
 def manage_patients(request):
-    # Logic to retrieve and manage patient records
-    return render(request, 'doctors/manage_patients.html', context={})
+    patients = Patient.objects.all()  # Fetch all patients
+    patient_data = []
+
+    for patient in patients:
+        # Count the number of lab tests associated with each patient
+        num_tests = LabTest.objects.filter(medical_record__patient=patient).count()
+        
+        patient_data.append({
+            'patient': patient,
+            'num_tests': num_tests,
+        })
+
+    # Set up pagination
+    paginator = Paginator(patient_data, 8)  # Show 8 patients per page
+    page_number = request.GET.get('page')
+    try:
+        page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page
+        page_obj = paginator.get_page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 999), deliver last page of results
+        page_obj = paginator.get_page(paginator.num_pages)
+
+    return render(request, 'doctors/manage_patients.html', {'page_obj': page_obj})
 
 
 def manage_health_records(request):
