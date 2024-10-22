@@ -108,7 +108,7 @@ def add_patients(request):
         # Redirect to the patient list after adding
         return redirect('patient_list')
 
-    return render(request, 'add_patients.html')
+    return render(request, 'registration.html')
 
 
 def manage_patients(request):
