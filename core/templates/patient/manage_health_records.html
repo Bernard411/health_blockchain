@@ -1,4 +1,4 @@
-{% extends 'base_template.html' %}
+{% extends 'patient/base_template.html' %}
 
 {% block main_content %}
 
@@ -13,6 +13,55 @@
     font-family: Poppins;
   }
 </style>
+
+<body>
+    
+  <h1 class="text-center my-4" style="font-size: small;">Medical Records</h1>
+  <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+          <tr>
+              <th>#</th>
+              <th>Patient Name</th>
+              <th>Doctor</th>
+              <th>Diagnosis</th>
+              <th>Treatment</th>
+              <th>Date of Visit</th>
+              <th>Blockchain Reference</th>
+              <th>Actions</th> <!-- New column for actions -->
+          </tr>
+      </thead>
+      <tbody>
+          {% for record in medical_records %}
+          <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ record.patient.name }}</td>
+              <td>{{ record.doctor }}</td>
+              <td>{{ record.diagnosis }}</td>
+              <td>{{ record.treatment }}</td>
+              <td>{{ record.date_of_visit }}</td>
+              <td>{{ record.blockchain_reference }}</td>
+              <td>
+                  <!-- View Button with icon -->
+                  <a href="#" class="btn btn-primary btn-sm">
+                      <i class="fas fa-eye"></i> View
+                  </a>
+                  <!-- Share Button with icon -->
+                  <a href="#" class="btn btn-secondary btn-sm">
+                      <i class="fas fa-share"></i> Share
+                  </a>
+              </td>
+          </tr>
+          {% empty %}
+          <tr>
+              <td colspan="8" class="text-center">No records found</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  
+    </div>
+
+
 
  
     </div> 

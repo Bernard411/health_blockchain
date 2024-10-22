@@ -152,6 +152,7 @@ select {
                     <th>Treatment</th>
                     <th>Date of Visit</th>
                     <th>Blockchain Reference</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -164,8 +165,19 @@ select {
                     <td>{{ record.treatment }}</td>
                     <td>{{ record.date_of_visit }}</td>
                     <td>{{ record.blockchain_reference }}</td>
-                </tr>
+               
+                <td>
+                    <!-- View Button with icon -->
+                    <a href="#" class="btn btn-primary btn-sm">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <!-- Share Button with icon -->
+                    <a href="#" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-share"></i> Share
+                    </a>
+                </td>
                 {% empty %}
+                </tr>
                 <tr>
                     <td colspan="7" class="text-center">No records found</td>
                 </tr>

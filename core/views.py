@@ -152,6 +152,34 @@ def manage_health_records(request):
     return render(request, 'doctors/manage_health_records.html', context)
 
 
+from django.shortcuts import render
+from .models import MedicalRecord, Patient
+
+def manage_health_records_patient(request):
+    # Get the authenticated user
+    user = request.user
+    
+    # Try to get the associated Patient instance
+    try:
+        patient = user.patient  # Assuming the User has a OneToOne relationship with Patient
+    except Patient.DoesNotExist:
+        # If the patient does not exist, you can handle it here (e.g., redirect or show a message)
+        return render(request, 'patient/manage_health_records.html', {
+            'medical_records': [],
+            'message': 'No patient record found for your account.'
+        })
+
+    # Get medical records associated with the patient
+    medical_records = MedicalRecord.objects.filter(patient=patient)
+
+    # Render the template with the medical records
+    return render(request, 'patient/manage_health_records.html', {
+        'medical_records': medical_records
+    })
+
+
+
+
 def manage_preceptions(request):
     preceptions = Prescription.objects.all()
     context = {

@@ -18,6 +18,7 @@ urlpatterns = [
   path('manage-patients/', views.manage_patients, name='manage_patients'),
 
   path('manage-health-records/', views.manage_health_records, name='manage_health_records'),
+  path('manage-health-records/patient/', views.manage_health_records_patient, name='manage_health_records_x'),
   path('home/patients/', views.patients, name='patients'),
 
     path('add-medical-record/', views.add_medical_record, name='add_medical_record'),
