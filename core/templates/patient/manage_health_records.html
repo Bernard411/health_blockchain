@@ -39,7 +39,7 @@
               <td>{{ record.diagnosis }}</td>
               <td>{{ record.treatment }}</td>
               <td>{{ record.date_of_visit }}</td>
-              <td>{{ record.blockchain_reference }}</td>
+              <!-- <td>{{ record.blockchain_reference }}</td> -->
               <td>
                   <!-- View Button with icon -->
                   <a href="#" class="btn btn-primary btn-sm">
@@ -49,6 +49,11 @@
                   <a href="#" class="btn btn-secondary btn-sm">
                       <i class="fas fa-share"></i> Share
                   </a>
+
+                  <a href="#" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-share"></i> Blockchain Refference
+                </a>
+                  
               </td>
           </tr>
           {% empty %}
