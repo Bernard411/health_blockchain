@@ -39,7 +39,7 @@
         
         <!-- Add Health Records -->
         <li class="nav-item">
-          <a href="{% url 'add_medical_record' %}" class="nav-link {% if request.path == '/add-health-records/' %}active{% endif %}">
+          <a href="{% url 'add_medical_record' %}" class="nav-link {% if request.path == '/add-medical-record/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-medical"></i>
             <span>Add Health Records</span>
           </a>
@@ -71,14 +71,14 @@
         
         <!-- Manage Prescriptions -->
         <li class="nav-item">
-          <a href="{% url 'add_prescription' %}" class="nav-link {% if request.path == '/manage-prescriptions/' %}active{% endif %}">
+          <a href="{% url 'add_prescription' %}" class="nav-link {% if request.path == '/add-prescription/' %}active{% endif %}">
             <i class="nav-icon fas fa-pills"></i>
             <span>Prescriptions</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'preceptions' %}" class="nav-link {% if request.path == '/manage-prescriptions/' %}active{% endif %}">
+          <a href="{% url 'preceptions' %}" class="nav-link {% if request.path == '/preceptions/' %}active{% endif %}">
             <i class="nav-icon fas fa-pills"></i>
             <span>Manage Prescriptions</span>
           </a>
@@ -86,7 +86,7 @@
         
         <!-- Billing -->
         <li class="nav-item">
-          <a href="{% url 'add_billing' %}" class="nav-link {% if request.path == '/manage-billing/' %}active{% endif %}">
+          <a href="{% url 'add_billing' %}" class="nav-link {% if request.path == '/add-billing/' %}active{% endif %}">
             <i class="nav-icon fas fa-file-invoice-dollar"></i>
             <span>Billing</span>
           </a>
@@ -94,7 +94,7 @@
         
         <!-- Manage Lab Tests -->
         <li class="nav-item">
-          <a href="{% url 'add_lab_test' %}" class="nav-link {% if request.path == '/manage-lab-tests/' %}active{% endif %}">
+          <a href="{% url 'add_lab_test' %}" class="nav-link {% if request.path == '/add-lab-test/' %}active{% endif %}">
             <i class="nav-icon fas fa-flask"></i>
             <span>Manage Lab Tests</span>
           </a>
