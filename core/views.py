@@ -560,3 +560,18 @@ def register(request):
         patient_form = PatientRegistrationForm()
     
     return render(request, 'register.html', {'user_form': user_form, 'patient_form': patient_form})
+
+
+
+# views.py
+import qrcode
+from django.shortcuts import render
+from django.http import HttpResponse
+from io import BytesIO
+
+def generate_qr_code(request, record_id):
+    url = request.build_absolute_uri(f"/view_medical_record/{record_id}")
+    qr = qrcode.make(url)
+    buffer = BytesIO()
+    qr.save(buffer, format="PNG")
+    return HttpResponse(buffer.getvalue(), content_type="image/png")

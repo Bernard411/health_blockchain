@@ -120,7 +120,7 @@ select {
                     <!-- <th>Diagnosis</th>
                     <th>Treatment</th> -->
                     <th>Date of Visit</th>
-                    <th>Blockchain Reference</th>
+                    <!-- <th>Blockchain Reference</th> -->
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -133,13 +133,13 @@ select {
                     <!-- <td>{{ record.diagnosis }}</td>
                     <td>{{ record.treatment }}</td> -->
                     <td>{{ record.date_of_visit }}</td>
-                    <td>
+                    <!-- <td>
                         <a href="#" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#blockchainReferenceModal" onclick="showBlockchainReference('{{ record.blockchain_reference }}')">
                                 <i class="fas fa-ethereum"></i> Blockchain Reference
                             </a>
                     
                         
-                    </td>
+                    </td> -->
                     <!-- <td>{{ record.blockchain_reference }}</td> -->
                     <td>
                         <!-- View Button with icon -->
@@ -147,9 +147,32 @@ select {
                             <i class="fas fa-eye"></i> View
                         </a>
                         <!-- Share Button with icon -->
-                        <a href="#" class="btn btn-secondary btn-sm">
-                            <i class="fas fa-share"></i> Share
-                        </a>
+                        <!-- Share Button with icon -->
+<a href="#" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#shareModal">
+  <i class="fas fa-share"></i> Share
+</a>
+
+<!-- Share Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="shareModalLabel">Share Your Health Record</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body text-center">
+              <p>Share this health record securely with others by scanning the QR code below.</p>
+              <img id="qrCode" src="{% url 'generate_qr_code' record.id %}" alt="QR Code" class="img-fluid">
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
                         
                     </td>
                 </tr>
@@ -161,6 +184,7 @@ select {
             </tbody>
         </table>
     </div>
+    
 
 <!-- Modal -->
 <div class="modal fade" id="blockchainReferenceModal" tabindex="-1" role="dialog" aria-labelledby="blockchainReferenceModalLabel" aria-hidden="true">

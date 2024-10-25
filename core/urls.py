@@ -34,6 +34,8 @@ urlpatterns = [
  path('medical-record/patient/<int:record_id>/', views.view_medical_record_x, name='view_medical_record_x'),
  path('search/patient', views.search_records_x, name='search_records_x'),
  path('register/', views.register, name='register'),
+
+ path('generate_qr_code/<int:record_id>/', views.generate_qr_code, name='generate_qr_code'),
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
